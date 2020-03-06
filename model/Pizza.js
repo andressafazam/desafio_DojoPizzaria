@@ -55,10 +55,33 @@ const listarCategoria = categoria =>{
     return conteudo;
 }
 
-const fazerPedido = (cliente,...nomePizza)=>{
-    pedidos.push()
-
-
+const buscarPizza = nome =>{
+    let conteudo = `---------------------------------------------------------- <br>`
+    for(let pizza of pizzas){
+        if(pizza.nome == nome){
+            conteudo += `<strong> Pizza ${pizza.categoria}: </strong> <br> <br>
+            &nbsp; &nbsp; &nbsp; &nbsp; - ${pizza.nome} ..... R$ ${pizza.preco} <br>`;
+        }
+    }
+    conteudo+=`---------------------------------------------------------- <br>`;
+    return conteudo;
 };
 
-module.exports = {listarPizzas, listarCategoria, logo};
+const addPizza = (nome, categoria, preco) =>{
+    let cont = 0;
+    for (pizza of pizzas){
+        if(pizza.categoria == categoria) 
+            cont = 1;
+    }
+    if(cont == 0) 
+        categorias.push(categoria);
+    pizzas.push({ nome: nome, categoria: categoria, preco: preco });
+    let conteudo = "* Pizza adicionada com sucesso ao catálogo! *<br><br>"
+    return conteudo + listarPizzas() ; 
+}
+
+const fazerPedido = (cliente,...nomePizza)=>{
+    pedidos.push()
+};
+
+module.exports = {listarPizzas, listarCategoria, buscarPizza, addPizza, logo};
