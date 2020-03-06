@@ -9,7 +9,7 @@ let pizzas = [
     { nome: "Peperoni", categoria: "Salgada", preco: 20 },
     { nome: "Portuguesa", categoria: "Salgada", preco: 20 },
     { nome: "Quatro queijos", categoria: "Salgada", preco: 25 },
-    { nome: "Milho e Bacon", categoria: "Salgada", preco: 25 },
+    { nome: "Milho e bacon", categoria: "Salgada", preco: 25 },
     { nome: "Beijinho", categoria: "Doce", preco: 20 },
     { nome: "Brigadeiro", categoria: "Doce", preco: 20 },
     { nome: "Sensação", categoria: "Doce", preco: 25 },
@@ -20,68 +20,58 @@ let pizzas = [
     { nome: "Abobrinha", categoria: "Vegetariana", preco: 25 },
 ];
 
-categorias = ["Salgada", "Doce", "Vegetariana"];
+let categorias = ["Salgada", "Doce", "Vegetariana"];
+let barra = `---------------------------------------------------------- <br>`;
 
 const logo = () =>{ 
     return `**************************************<br>
     ************<strong> Pizzaria Node </strong>*************
     <br>**************************************<br><br>`;
-} 
+};
 
 const listarPizzas = () =>{
-    let conteudo = `
-    ----------------
-    <strong> Catálogo de Pizzas</strong> 
-    ----------------<br>`
+    let conteudo = `----------------<strong> Catálogo de Pizzas </strong>----------------<br>`;
     for(let categ of categorias){
         conteudo+= listarCategoria(categ);
     }
     return conteudo;
-}
+};
 
 const listarCategoria = categoria =>{
-    let conteudo = `---------------------------------------------------------- <br>
-    <strong> Pizzas ${categoria}s: </strong> <br> <br>`;
+    let conteudo = `${barra} <strong> Pizzas ${categoria}s: </strong> <br> <br>`;
     for(let pizza of pizzas){
         let espaco = ".....";
-        while ((pizza.nome+espaco).length < 32){
+        while ((pizza.nome+espaco).length < 32)
             espaco+=".";
-        }
-        if(pizza.categoria == categoria){
+        if(pizza.categoria == categoria)
             conteudo+=`&nbsp; &nbsp; &nbsp; &nbsp; - ${pizza.nome} ${espaco} R$ ${pizza.preco} <br>`;
-        }
     }
-    conteudo+=`---------------------------------------------------------- <br>`;
-    return conteudo;
+    return conteudo + barra;
 }
 
 const buscarPizza = nome =>{
-    let conteudo = `---------------------------------------------------------- <br>`
-    for(let pizza of pizzas){
-        if(pizza.nome == nome){
+    let conteudo = `${barra}`;
+    let filtro = pizzas.filter( pizza => pizza.nome == nome);
+    if(filtro.length != 0)
+        for(pizza of filtro)
             conteudo += `<strong> Pizza ${pizza.categoria}: </strong> <br> <br>
-            &nbsp; &nbsp; &nbsp; &nbsp; - ${pizza.nome} ..... R$ ${pizza.preco} <br>`;
-        }
-    }
-    conteudo+=`---------------------------------------------------------- <br>`;
+            &nbsp; &nbsp; &nbsp; &nbsp; - ${pizza.nome} ..... R$ ${pizza.preco} <br>${barra}`;
+    else 
+        conteudo += `Pizza ${nome} não foi encontrada!<br>${barra}`;
     return conteudo;
 };
 
 const addPizza = (nome, categoria, preco) =>{
-    let cont = 0;
-    for (pizza of pizzas){
-        if(pizza.categoria == categoria) 
-            cont = 1;
-    }
-    if(cont == 0) 
+    let filtro = pizzas.filter( pizza => pizza.categoria == categoria);
+    if(filtro.length == 0) 
         categorias.push(categoria);
     pizzas.push({ nome: nome, categoria: categoria, preco: preco });
-    let conteudo = "* Pizza adicionada com sucesso ao catálogo! *<br><br>"
-    return conteudo + listarPizzas() ; 
+    conteudo = "* Pizza adicionada com sucesso ao catálogo! *<br><br>"
+    return conteudo + listarPizzas(); 
 }
 
-const fazerPedido = (cliente,...nomePizza)=>{
+const addpedido = (cliente,...nomePizza) =>{
     pedidos.push()
 };
 
-module.exports = {listarPizzas, listarCategoria, buscarPizza, addPizza, logo};
+module.exports = {listarPizzas, listarCategoria, buscarPizza, addPizza, addpedido, logo};

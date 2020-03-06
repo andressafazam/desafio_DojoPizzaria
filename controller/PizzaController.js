@@ -8,7 +8,7 @@ const pizzaController = {
         ---------------------------------------------------------- <br><br>
         <strong>/listarPizzas</strong> <br>Para mostrar o nosso catálogo <br><br>
         <strong>/listarCategoria/:categoria</strong> <br>Para procurar pizzas pela categoria <br><br>
-        <strong>/listarPizzas/nome/:nome</strong> <br>Para procurar uma pizza pelo nome <br><br>
+        <strong>/listarPizzas/:nome</strong> <br>Para procurar uma pizza pelo nome <br><br>
         <strong>/addpizza/:nome/:categoria/:preco</strong> <br>Para adicionar uma nova pizza ao catalogo<br><br>
         `);
     },
@@ -35,7 +35,9 @@ const pizzaController = {
     },
 
     pedidos: (req, res) =>{
-        res.send("**Pedidos**");
+        let pedidos = queryString;
+        res.send(pizzaModel.logo() + `${pedidos}`);
+        //"**Pedidos**");
     }
 }
 
