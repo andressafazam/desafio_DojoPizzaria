@@ -1,6 +1,7 @@
 let pedidos = [
-    { cliente:'Pedro', pizza:['Calabresa'], total: 0 },
-    { cliente:'Marta', pizza:['Portuguesa', 'Brigadeiro'], total: 0 }
+    { cliente:'Pedro', pizza:['Calabresa', 'Milho'], total: 0 },
+    { cliente:'Marta', pizza:['Portuguesa', 'Brigadeiro','Brócolis'], total: 0 },
+    { cliente:'Ana', pizza:['Mussarela'], total: 0 }
 ];
 
 let pizzas = [
@@ -22,6 +23,8 @@ let pizzas = [
 
 let categorias = ["Salgada", "Doce", "Vegetariana"];
 let barra = `---------------------------------------------------------- <br>`;
+let tab =`&nbsp; &nbsp; &nbsp; &nbsp;`;
+let tabTriplo = `${tab} ${tab} ${tab}`;
 
 const logo = () =>{ 
     return `**************************************<br>
@@ -44,7 +47,7 @@ const listarCategoria = categoria =>{
         while ((pizza.nome+espaco).length < 32)
             espaco+=".";
         if(pizza.categoria == categoria)
-            conteudo+=`&nbsp; &nbsp; &nbsp; &nbsp; - ${pizza.nome} ${espaco} R$ ${pizza.preco} <br>`;
+            conteudo+=`${tab} - ${pizza.nome} ${espaco} R$ ${pizza.preco} <br>`;
     }
     return conteudo + barra;
 }
@@ -53,9 +56,9 @@ const buscarPizza = nome =>{
     let conteudo = `${barra}`;
     let filtro = pizzas.filter( pizza => pizza.nome == nome);
     if(filtro.length != 0)
-        for(pizza of filtro)
+        for(let pizza of filtro)
             conteudo += `<strong> Pizza ${pizza.categoria}: </strong> <br> <br>
-            &nbsp; &nbsp; &nbsp; &nbsp; - ${pizza.nome} ..... R$ ${pizza.preco} <br>${barra}`;
+            ${tab} - ${pizza.nome} ..... R$ ${pizza.preco} <br>${barra}`;
     else 
         conteudo += `Pizza ${nome} não foi encontrada!<br>${barra}`;
     return conteudo;
@@ -70,8 +73,35 @@ const addPizza = (nome, categoria, preco) =>{
     return conteudo + listarPizzas(); 
 }
 
-const addpedido = (cliente,...nomePizza) =>{
-    pedidos.push()
+const listarPedidos = () =>{
+    let conteudo = `-----------------<strong> Lista de Pedidos </strong>------------------<br>`;
+    let valor = 0;
+    let valorTotal = 0;
+    for(pedido of pedidos){
+        conteudo += `${barra}<strong>${pedido.cliente}</strong><br>`;
+        for(let pizza of pedido.pizza){
+            valor = buscarPreco(pizza);
+            conteudo += `${tab} - ${pizza}  ..... R$ ${valor}<br>`;
+            valorTotal += valor;
+        }
+        conteudo += `${tabTriplo} ${tabTriplo} ${tab}
+        <strong>Total:</strong>${valorTotal}<br>`;
+        valorTotal = 0;
+    }
+    return conteudo + barra;
+}
+
+const buscarPreco = nome =>{
+    let valor = 0;
+    let filtro = pizzas.filter( pizza => pizza.nome == nome);
+    for(let pizza of filtro)
+        valor = pizza.preco;
+    return valor;
 };
 
-module.exports = {listarPizzas, listarCategoria, buscarPizza, addPizza, addpedido, logo};
+const addPedido = (cliente,...pedidoPizzas) =>{
+    pedidos.push({cliente: cliente, pizza: pedidoPizzas});
+    return `${pedidos[2].cliente} ${pedidos[2].pizza}`
+};
+
+module.exports = {listarPizzas, listarCategoria, buscarPizza, addPizza, listarPedidos, buscarPreco, addPedido, logo};
