@@ -6,11 +6,14 @@ const pizzaController = {
         ---------------------------------------------------------- <br>
         ----------<strong> Bem Vindo a Pizzaria Node! </strong>---------- <br>
         ---------------------------------------------------------- <br><br>
-        <strong>/listarPizzas</strong> <br>Para mostrar o nosso catálogo <br><br>
-        <strong>/listarCategoria/:categoria</strong> <br>Para procurar pizzas pela categoria <br><br>
-        <strong>/listarPizzas/:nome</strong> <br>Para procurar uma pizza pelo nome <br><br>
-        <strong>/addPizza/:nome/:categoria/:preco</strong> <br>Para adicionar uma nova pizza ao catalogo<br><br>
-        <strong>/listarPedidos</strong> <br>Para mostrar todos os pedidos <br><br>
+        <strong>/listarPizzas</strong> <br>Para mostrar o nosso catálogo. <br><br>
+        <strong>/listarPizzas/:nome</strong> <br>Para procurar uma pizza pelo nome. <br><br>
+        <strong>/listarCategoria/:categoria</strong> <br>Para procurar pizzas pela categoria. <br><br>
+        <strong>/addPizza/:nome/:categoria/:preco</strong> <br>Para adicionar uma nova pizza ao catalogo.<br><br>
+        <strong>/listarPedidos</strong> <br>Para mostrar todos os pedidos. <br><br>
+        <strong>/addPedido/:nome/:pizzas</strong> <br>Para adicionar um pedido. Caso o pedido tenha<br>
+        mais de uma pizza separar os sabores com o <br>caractere & como no exemplo a seguir: <br>
+        http://localhost:3000/addPedido/David/Mussarela&Beijinho&Milho <br><br> 
         `);
     },
 
@@ -41,8 +44,8 @@ const pizzaController = {
 
     addPedidos: (req, res) =>{
         let cliente = req.params.nome;
-        let pizzas = req.params.pizzas;
-        res.send(pizzaModel.logo() + pizzaModel.addPedido(cliente,...pizzas));
+        let listaDePizzas = (req.params.pizzas).split("&");
+        res.send(pizzaModel.logo() + pizzaModel.addPedido(cliente,...listaDePizzas));
     }
 }
 

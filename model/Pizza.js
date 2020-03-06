@@ -1,30 +1,22 @@
 let pedidos = [
     { cliente:'Pedro', pizza:['Calabresa', 'Milho'], total: 0 },
-    { cliente:'Marta', pizza:['Portuguesa', 'Brigadeiro','Brócolis'], total: 0 },
+    { cliente:'Marta', pizza:['Portuguesa', 'Brigadeiro', 'Brócolis'], total: 0 },
     { cliente:'Ana', pizza:['Mussarela'], total: 0 }
 ];
 
 let pizzas = [
-    { nome: "Calabresa", categoria: "Salgada", preco: 15 },
-    { nome: "Mussarela", categoria: "Salgada", preco: 15 },
-    { nome: "Peperoni", categoria: "Salgada", preco: 20 },
-    { nome: "Portuguesa", categoria: "Salgada", preco: 20 },
-    { nome: "Quatro queijos", categoria: "Salgada", preco: 25 },
-    { nome: "Milho e bacon", categoria: "Salgada", preco: 25 },
-    { nome: "Beijinho", categoria: "Doce", preco: 20 },
-    { nome: "Brigadeiro", categoria: "Doce", preco: 20 },
-    { nome: "Sensação", categoria: "Doce", preco: 25 },
-    { nome: "Romeu e Julieta", categoria: "Doce", preco: 25 },
-    { nome: "Milho", categoria: "Vegetariana", preco: 15 },
-    { nome: "Palmito", categoria: "Vegetariana", preco: 20 },
-    { nome: "Brócolis", categoria: "Vegetariana", preco: 25 },
-    { nome: "Abobrinha", categoria: "Vegetariana", preco: 25 },
+    { nome: "Mussarela", categoria: "Salgada", preco: 15 },{ nome: "Calabresa", categoria: "Salgada", preco: 15 },
+    { nome: "Brasileira", categoria: "Salgada", preco: 20 },{ nome: "Peperoni", categoria: "Salgada", preco: 20 },
+    { nome: "Portuguesa", categoria: "Salgada", preco: 25 },{ nome: "QuatroQueijos", categoria: "Salgada", preco: 25 },
+    { nome: "Beijinho", categoria: "Doce", preco: 20 },{ nome: "Brigadeiro", categoria: "Doce", preco: 20 },
+    { nome: "Prestígio", categoria: "Doce", preco: 25 },{ nome: "Sensação", categoria: "Doce", preco: 25 },
+    { nome: "Milho", categoria: "Vegetariana", preco: 15 },{ nome: "Palmito", categoria: "Vegetariana", preco: 20 },
+    { nome: "Brócolis", categoria: "Vegetariana", preco: 25 },{ nome: "Abobrinha", categoria: "Vegetariana", preco: 25 }
 ];
 
 let categorias = ["Salgada", "Doce", "Vegetariana"];
 let barra = `---------------------------------------------------------- <br>`;
-let tab =`&nbsp; &nbsp; &nbsp; &nbsp;`;
-let tabTriplo = `${tab} ${tab} ${tab}`;
+let tab =`&nbsp`.repeat(7);
 
 const logo = () =>{ 
     return `**************************************<br>
@@ -69,7 +61,7 @@ const addPizza = (nome, categoria, preco) =>{
     if(filtro.length == 0) 
         categorias.push(categoria);
     pizzas.push({ nome: nome, categoria: categoria, preco: preco });
-    conteudo = "* Pizza adicionada com sucesso ao catálogo! *<br><br>"
+    let conteudo = "* Pizza adicionada com sucesso ao catálogo! *<br><br>"
     return conteudo + listarPizzas(); 
 }
 
@@ -84,8 +76,7 @@ const listarPedidos = () =>{
             conteudo += `${tab} - ${pizza}  ..... R$ ${valor}<br>`;
             valorTotal += valor;
         }
-        conteudo += `${tabTriplo} ${tabTriplo} ${tab}
-        <strong>Total:</strong>${valorTotal}<br>`;
+        conteudo += `&nbsp;`.repeat(58) + `<strong>Total:</strong>${valorTotal}<br>`;
         valorTotal = 0;
     }
     return conteudo + barra;
@@ -99,9 +90,11 @@ const buscarPreco = nome =>{
     return valor;
 };
 
-const addPedido = (cliente,...pedidoPizzas) =>{
-    pedidos.push({cliente: cliente, pizza: pedidoPizzas});
-    return `${pedidos[2].cliente} ${pedidos[2].pizza}`
+const addPedido = (cliente,...listaDePizzas) =>{
+    let arrayPizzas = [...listaDePizzas];
+    pedidos.push({cliente: cliente, pizza: arrayPizzas});
+    conteudo = `*** Pedido adicionado com sucesso a lista! ***<br><br>`;
+    return conteudo + listarPedidos();
 };
 
 module.exports = {listarPizzas, listarCategoria, buscarPizza, addPizza, listarPedidos, buscarPreco, addPedido, logo};
